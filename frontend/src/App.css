@@ -1,0 +1,32 @@
+.App {
+  text-align: center;
+}
+
+.AppTitle {
+  color: whitesmoke;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.PokeInput {
+  height: 30px;
+  width: 38%;
+  border: none;
+  border-radius: 15px;
+  padding-left: 20px;
+  margin-bottom: 30px;
+  border: 2px solid black;
+}
+
+.PokeButton {
+  margin-left: 1%;
+  border: 2px solid black;
+  height: 40px;
+  width: 10%;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.PokeButton:hover {
+  font-weight: bold;
+}
