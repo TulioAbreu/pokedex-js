@@ -1,6 +1,8 @@
 const jsdom = require('jsdom');
-const { JSDOM } = jsdom;
-
+const {
+    JSDOM
+} = jsdom;
+const fetch = require('node-fetch');
 
 class BulbapediaExtractor {
     constructor(htmlCode) {
@@ -21,7 +23,7 @@ class BulbapediaExtractor {
 
     getPokemonImage(text) {
         let pokeImage = text.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/);
-        if (! pokeImage) {
+        if (!pokeImage) {
             pokeImage = text.match(/\/\/cdn\.bulbagarden\.net\/upload\/thumb.*500px.*(?:jpg|gif|png)/);
             let splitTest = pokeImage[0].split(' ').slice(-1)[0];
             return splitTest;
@@ -36,7 +38,7 @@ class BulbapediaExtractor {
     getPokemonType(text) {
         const types = text.match(/title=\".*\s\(type\)\"/g);
         let possiblyRealTypes = [
-            types[0], 
+            types[0],
             types[1]
         ];
         let typesStr = possiblyRealTypes.map(value => {
@@ -60,6 +62,79 @@ class BulbapediaExtractor {
         return (text.indexOf('There is currently no text in this page') < 0);
     }
 
+    static getPokemonLink(pokemonName) {
+        let pokeName = this.sanitizePokemonName(pokemonName);
+        return "https://bulbapedia.bulbagarden.net/wiki/" + pokeName + "_(Pok%C3%A9mon)";
+    }
+
+    static fixPokemonName(rawPokemonName) {
+        function fixLetters(str) {
+            let newStr = "";
+            let nextUpper = true;
+
+            for (let i = 0; i < str.length; ++i) {
+                if (nextUpper) {
+                    newStr += str[i].toUpperCase();
+                    nextUpper = false;
+                } else {
+                    newStr += str[i].toLowerCase();
+                }
+
+                if (str[i] == '-' || str[i] == '_' || str[i] == ' ') {
+                    nextUpper = true;
+                }
+            }
+
+            return newStr;
+        }
+
+        let pokeName = rawPokemonName;
+        pokeName = fixLetters(pokeName);
+
+        return pokeName;
+    }
+
+
+    static sanitizePokemonName(rawPokemonName) {
+        function fixLetters(str) {
+            let newStr = "";
+            let nextUpper = true;
+
+            for (let i = 0; i < str.length; ++i) {
+                if (nextUpper) {
+                    newStr += str[i].toUpperCase();
+                    nextUpper = false;
+                } else {
+                    newStr += str[i].toLowerCase();
+                }
+
+                if (str[i] == '-' || str[i] == '_') {
+                    nextUpper = true;
+                }
+            }
+
+            return newStr;
+        }
+
+        let pokeName = rawPokemonName;
+        pokeName = pokeName.replace(' ', '_');
+        pokeName = pokeName.replace("'", "%27");
+        pokeName = pokeName.replace('é', "%C3%A9");
+        pokeName = fixLetters(pokeName);
+
+        return pokeName;
+    }
+
+    static async getHtml(link) {
+        const htmlPage = (await fetch(link)).text();
+
+        return htmlPage;
+    }
+
+    static getPokemonHtml(pokemonName) {
+        return this.getHtml(this.getPokemonLink(pokemonName));
+    }
+
     getPokemonJSON() {
         const dom = new jsdom.JSDOM(this.htmlCode);
 
@@ -67,7 +142,7 @@ class BulbapediaExtractor {
         tmpDiv.innerHTML = this.htmlCode;
         const textContent = tmpDiv.textContent;
 
-        if (! this.isValidPage(textContent)) {
+        if (!this.isValidPage(textContent)) {
             return {
                 name: "",
                 number: "",

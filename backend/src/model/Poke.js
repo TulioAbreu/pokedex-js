@@ -28,7 +28,19 @@ const PokeSchema = new Schema({
     biology: {
         type: Schema.Types.String,
         required: true
-    }
+    },
+    species: {
+        type: Schema.Types.String,
+        required: false
+    },
+    abilities: [{
+        type: Schema.Types.String,
+        required: false
+    }],
+    status: [{
+        type: Schema.Types.Array,
+        required: false
+    }]
 });
 
 module.exports = model('Poke', PokeSchema);
