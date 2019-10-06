@@ -3,6 +3,8 @@ const Poke = require('../model/Poke');
 const BulbapediaExtractor = require('./bulbapediaExtractor');
 const PokeDbExtractor = require('./pokeDbExtractor');
 
+const { scrapePokeData } = require('./wrapper')
+
 module.exports = {
     async show(request, response) { 
         const { rawPokeName } = request.params;
@@ -18,27 +20,7 @@ module.exports = {
         }
 
         console.log(`Scrapping for pokemon data [POKEMON=${pokeName}]`);
-        const bulbapediaPokeHtml = await BulbapediaExtractor.getPokemonHtml(pokeName);
-        const pokedbPokeHtml = await PokeDbExtractor.getPokemonHtml(pokeName);
-
-        let bulbaExtractor = new BulbapediaExtractor(bulbapediaPokeHtml);
-        let pokedbExtractor = new PokeDbExtractor(pokedbPokeHtml);
-
-        const bulbapediaData = bulbaExtractor.getPokemonJSON();
-        const pokedbData = pokedbExtractor.getPokemonJSON();
-
-        const pokeData = {
-            name: bulbapediaData["name"],
-            number: bulbapediaData["number"],
-            imgURL: bulbapediaData["imgURL"],
-            type: bulbapediaData["type"],
-            height: bulbapediaData["height"],
-            weight: bulbapediaData["weight"],
-            biology: bulbapediaData["biology"],
-            species: pokedbData["species"],
-            abilities: pokedbData["abilities"],
-            status: pokedbData["status"]
-        }
+        const pokeData = await scrapePokeData(pokeName);
 
         await Poke.create(pokeData);
         return response.json(pokeData);
