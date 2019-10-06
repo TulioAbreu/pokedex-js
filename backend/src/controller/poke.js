@@ -12,12 +12,10 @@ module.exports = {
             "name": BulbapediaExtractor.fixPokemonName(rawPokeName)
         });
 
-        // TODO: Update Poke Model
-        // Commented until all data is updated with pokeDb
-        // if (pokeExist) {
-        //     console.log(`Sent pokemon cached data [POKEMON=${pokeName}]`);
-        //     return response.json(pokeExist);
-        // }
+        if (pokeExist) {
+            console.log(`Sent pokemon cached data [POKEMON=${pokeName}]`);
+            return response.json(pokeExist);
+        }
 
         console.log(`Scrapping for pokemon data [POKEMON=${pokeName}]`);
         const bulbapediaPokeHtml = await BulbapediaExtractor.getPokemonHtml(pokeName);
@@ -29,7 +27,7 @@ module.exports = {
         const bulbapediaData = bulbaExtractor.getPokemonJSON();
         const pokedbData = pokedbExtractor.getPokemonJSON();
 
-        const poke = await Poke.create({
+        const pokeData = {
             name: bulbapediaData["name"],
             number: bulbapediaData["number"],
             imgURL: bulbapediaData["imgURL"],
@@ -40,19 +38,9 @@ module.exports = {
             species: pokedbData["species"],
             abilities: pokedbData["abilities"],
             status: pokedbData["status"]
-        });
+        }
 
-        return response.json({
-            name: bulbapediaData["name"],
-            number: bulbapediaData["number"],
-            imgURL: bulbapediaData["imgURL"],
-            type: bulbapediaData["type"],
-            height: bulbapediaData["height"],
-            weight: bulbapediaData["weight"],
-            biology: bulbapediaData["biology"],
-            species: pokedbData["species"],
-            abilities: pokedbData["abilities"],
-            status: pokedbData["status"]
-        });
+        await Poke.create(pokeData);
+        return response.json(pokeData);
     }
 };
