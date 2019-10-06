@@ -14,7 +14,7 @@ mongoose.connect(mongoDbConnectionStr, {
 app.use(cors());
 app.use(express.json());
 
-app.post('/poke/:rawPokeName', PokeController.show);
+app.post('/poke/:pokeName', PokeController.show);
 
 app.listen(3333, () => {
     console.log('[INFO] PokeJS server is open on port 3333!');

@@ -1,28 +1,20 @@
-const Poke = require('../model/Poke');
-
-const BulbapediaExtractor = require('./bulbapediaExtractor');
-const PokeDbExtractor = require('./pokeDbExtractor');
-
+const { getPoke, savePoke, fixPokeName } = require('./pokeController')
 const { scrapePokeData } = require('./wrapper')
 
 module.exports = {
     async show(request, response) { 
-        const { rawPokeName } = request.params;
-        let pokeName = BulbapediaExtractor.sanitizePokemonName(rawPokeName);
+        const { pokeName } = request.params
 
-        const pokeExist  = await Poke.findOne({
-            "name": BulbapediaExtractor.fixPokemonName(rawPokeName)
-        });
-
-        if (pokeExist) {
-            console.log(`Sent pokemon cached data [POKEMON=${pokeName}]`);
-            return response.json(pokeExist);
+        let pokeData = await getPoke(pokeName)
+        if (pokeData == null) {
+            console.log(`Scrapping for pokemon data [POKEMON=${pokeName}]`)
+            pokeData = await scrapePokeData(pokeName)
+            savePoke(pokeData)
+        }
+        else {
+            console.log(`Sent pokemon cached data [POKEMON=${pokeName}]`)
         }
 
-        console.log(`Scrapping for pokemon data [POKEMON=${pokeName}]`);
-        const pokeData = await scrapePokeData(pokeName);
-
-        await Poke.create(pokeData);
-        return response.json(pokeData);
+        return response.json(pokeData)
     }
 };

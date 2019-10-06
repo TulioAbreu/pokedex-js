@@ -25,6 +25,8 @@ module.exports = {
             status: pokedbData["status"]
         }
 
+        console.log(pokeData)
+
         return pokeData
     }
 }
