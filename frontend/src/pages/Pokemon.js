@@ -6,6 +6,7 @@ import './Main.css'
 export default function Pokemon({ history, match }) {
     const [reloadPage, setReload] = useState(true);
     const [pokename, setPokename] = useState('');
+    const [types, setTypes] = useState([])
     const [pokeInfo, setPokeInfo ] = useState({});
 
     async function handleSubmit(e) {
@@ -14,15 +15,28 @@ export default function Pokemon({ history, match }) {
         setReload(true);
     }
 
+    
+
     useEffect(() => {
         if (reloadPage) {
             async function loadPokemon() {
                 const pokename = match.params.pokeData;
                 const response = await api.post(`/poke/${pokename}`);
-                response.data.type = response.data.type.join(' and ');
+
+                const typesList = response.data.type
+                let pokeTypeStyles = []
+                for (let i = 0; i < typesList.length; ++i) {
+                    pokeTypeStyles.push({
+                        str: typesList[i],
+                        cssClass: "type-icon type-" + typesList[i].toLowerCase()
+                    })
+                }
+                setTypes(pokeTypeStyles)
+
                 setPokeInfo(response.data);
             }
     
+
             loadPokemon();
             setReload(false);
         }
@@ -50,7 +64,11 @@ export default function Pokemon({ history, match }) {
                 <img className="pokeImage" 
                     src={pokeInfo.imgURL} 
                     alt={pokeInfo.name} width="300"></img>
-                <p>Type: {pokeInfo.type} </p>
+                {types.map(type => (
+                    <div className={ type.cssClass }>
+                        { type.str }
+                    </div>
+                ))}
                 <p>Height: {pokeInfo.height}</p>
                 <p>Weight: {pokeInfo.weight}</p>
                 <p className="pokeBiology">Biology: {pokeInfo.biology}</p>
