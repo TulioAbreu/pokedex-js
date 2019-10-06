@@ -22,7 +22,13 @@ module.exports = {
             biology: bulbapediaData["biology"],
             species: pokedbData["species"],
             abilities: pokedbData["abilities"],
-            status: pokedbData["status"]
+            status_hp: pokedbData["status_hp"],
+            status_attack: pokedbData["status_attack"],
+            status_defense: pokedbData["status_defense"],
+            status_spAttack: pokedbData["status_spAttack"],
+            status_spDefense: pokedbData["status_spDefense"],
+            status_speed: pokedbData["status_speed"],
+            status_total: pokedbData["status_total"]
         }
 
         return pokeData

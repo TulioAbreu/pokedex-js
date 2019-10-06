@@ -24,22 +24,27 @@ class PokeDbExtractor {
             return {
                 "species": "",
                 "abilities": [],
-                "status": {
-                    "hp": [-1, -1, -1],
-                    "attack": [-1, -1, -1],
-                    "defense": [-1, -1, -1],
-                    "spAttack": [-1, -1, -1],
-                    "spDefense": [-1, -1, -1],
-                    "speed": [-1, -1, -1],
-                    "total": [-1, -1, -1],
-                }
+                "status_hp": [-1, -1, -1],
+                "status_attack": [-1, -1, -1],
+                "status_defense": [-1, -1, -1],
+                "status_spAttack": [-1, -1, -1],
+                "status_spDefense": [-1, -1, -1],
+                "status_speed": [-1, -1, -1],
+                "status_total": [-1, -1, -1],
             }
         }
 
+        let pokemonStatus = this.getPokemonStatus(dom.window.document)
         return {
             "species": this.getPokemonSpecies(dom.window.document),
             "abilities": this.getPokemonAbilities(dom.window.document),
-            "status": this.getPokemonStatus(dom.window.document)
+            "status_hp": pokemonStatus[0][1],
+            "status_attack": pokemonStatus[1][1],
+            "status_defense": pokemonStatus[2][1],
+            "status_spAttack": pokemonStatus[3][1],
+            "status_spDefense": pokemonStatus[4][1],
+            "status_speed": pokemonStatus[5][1],
+            "status_total": pokemonStatus[6][1],
         }
     }
 
