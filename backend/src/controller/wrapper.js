@@ -1,5 +1,5 @@
-const BulbapediaExtractor = require('./bulbapediaExtractor');
-const PokeDbExtractor = require('./pokeDbExtractor');
+const BulbapediaExtractor = require('./wrappers/bulbapediaWrapper');
+const PokeDbExtractor = require('./wrappers/pokeDbWrapper');
 
 module.exports = {
     async scrapePokeData(pokeName) {
@@ -24,8 +24,6 @@ module.exports = {
             abilities: pokedbData["abilities"],
             status: pokedbData["status"]
         }
-
-        console.log(pokeData)
 
         return pokeData
     }

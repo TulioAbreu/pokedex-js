@@ -1,8 +1,8 @@
-const { getPoke, savePoke, fixPokeName } = require('./pokeController')
+const { getPoke, savePoke } = require('./pokeController')
 const { scrapePokeData } = require('./wrapper')
 
 module.exports = {
-    async show(request, response) { 
+    async show(request, response) {
         const { pokeName } = request.params
 
         let pokeData = await getPoke(pokeName)
