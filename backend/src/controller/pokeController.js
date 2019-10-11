@@ -1,4 +1,4 @@
-const Poke = require('../model/poke');
+const Poke = require('../model/Poke');
 
 function fixPokeName(rawPokeName) {
     let fixedName = rawPokeName[0].toUpperCase() + rawPokeName.slice(1)
