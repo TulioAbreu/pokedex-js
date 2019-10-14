@@ -5,6 +5,7 @@ import './Main.css'
 import FadeIn from "react-fade-in";
 import Lottie from "react-lottie";
 import ReactLoading from "react-loading";
+import pokeNotFound from '../components/pokeNotFound'
 
 export default function Pokemon({ history, match }) {
     const [reloadPage, setReload] = useState(true);
@@ -35,8 +36,6 @@ export default function Pokemon({ history, match }) {
 
         setTypes(pokeTypeStyles)
         setPokeInfo(response.data)
-
-        
     }
 
     async function loadPokemonPage() {
@@ -59,7 +58,9 @@ export default function Pokemon({ history, match }) {
                     className="PokeInput"
                     value={pokename}
                     onChange={e => setPokename(e.target.value)}
-                    placeholder="Pokemon name">
+                    placeholder="Pokemon name"
+                    required
+                >
                 </input>
                 <button 
                     type="submit"
@@ -76,21 +77,27 @@ export default function Pokemon({ history, match }) {
                     <ReactLoading type={"bars"} color={"white"} />
                 </div>
                 :
-                <div>
-                    <div className="pokeTable">
-                        <p className="pokeName">{pokeInfo.number} - {pokeInfo.name}</p>
-                        <img className="pokeImage" 
-                            src={pokeInfo.imgURL} 
-                            alt={pokeInfo.name} width="300"></img>
-                        {types.map(type => (
-                            <div className={ type.cssClass }>
-                                { type.str }
-                            </div>
-                        ))}
-                        <p>Height: {pokeInfo.height}</p>
-                        <p>Weight: {pokeInfo.weight}</p>
-                        <p className="pokeBiology">Biology: {pokeInfo.biology}</p>
-                    </div>
+                <div className="pokeTable">
+                    {pokeInfo == null?
+                        <div>
+                            { pokeNotFound() }
+                        </div>
+                        :
+                        <div>
+                            <p className="pokeName">{pokeInfo.number} - {pokeInfo.name}</p>
+                            <img className="pokeImage" 
+                                src={pokeInfo.imgURL} 
+                                alt={pokeInfo.name} width="300"></img>
+                            {types.map(type => (
+                                <div className={ type.cssClass }>
+                                    { type.str }
+                                </div>
+                            ))}
+                            <p>Height: {pokeInfo.height}</p>
+                            <p>Weight: {pokeInfo.weight}</p>
+                            <p className="pokeBiology">Biology: {pokeInfo.biology}</p>
+                        </div>
+                    }
                 </div>
             }
         </div>
