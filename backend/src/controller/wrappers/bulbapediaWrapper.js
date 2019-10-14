@@ -72,7 +72,6 @@ class BulbapediaExtractor {
 
     static getPokemonLink(pokemonName) {
         let pokeName = this.sanitizePokemonName(pokemonName);
-        console.log("https://bulbapedia.bulbagarden.net/wiki/" + pokeName + "_(Pok%C3%A9mon)")
         return "https://bulbapedia.bulbagarden.net/wiki/" + pokeName + "_(Pok%C3%A9mon)";
     }
 
