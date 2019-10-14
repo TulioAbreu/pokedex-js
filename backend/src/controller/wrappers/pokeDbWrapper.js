@@ -14,6 +14,18 @@ class PokeDbExtractor {
     }
 
     getPokemonJSON() {
+        function nullStatus() {
+            return [-1, -1, -1]
+        }
+
+        function sanitizeStatusReturn(value) {
+            if (value == null) {
+                return [-1, -1, -1]
+            }
+            return value
+        }
+
+    
         const dom = new JSDOM(this.htmlCode);
         
         let tmpDiv = dom.window.document.createElement('div');
@@ -35,16 +47,17 @@ class PokeDbExtractor {
         }
 
         let pokemonStatus = this.getPokemonStatus(dom.window.document)
+
         return {
             "species": this.getPokemonSpecies(dom.window.document),
             "abilities": this.getPokemonAbilities(dom.window.document),
-            "status_hp": pokemonStatus[0][1],
-            "status_attack": pokemonStatus[1][1],
-            "status_defense": pokemonStatus[2][1],
-            "status_spAttack": pokemonStatus[3][1],
-            "status_spDefense": pokemonStatus[4][1],
-            "status_speed": pokemonStatus[5][1],
-            "status_total": pokemonStatus[6][1],
+            "status_hp": sanitizeStatusReturn(pokemonStatus[0][1]),
+            "status_attack": sanitizeStatusReturn(pokemonStatus[1][1]),
+            "status_defense": sanitizeStatusReturn(pokemonStatus[2][1]),
+            "status_spAttack": sanitizeStatusReturn(pokemonStatus[3][1]),
+            "status_spDefense": sanitizeStatusReturn(pokemonStatus[4][1]),
+            "status_speed": sanitizeStatusReturn(pokemonStatus[5][1]),
+            "status_total": sanitizeStatusReturn(pokemonStatus[6][1]),
         }
     }
 
@@ -80,6 +93,10 @@ class PokeDbExtractor {
 
     getPokemonStatus(dom) {
         const pokeStatusHtml = dom.getElementsByClassName("vitals-table").item(3);
+        if (pokeStatusHtml == null) {
+            return null;
+        }
+
         const tableContents = pokeStatusHtml.getElementsByTagName("td");
         
         let statusList = [[]];

@@ -8,6 +8,7 @@ const app = express();
 const mongoDbConnectionStr = require('./secret');
 
 mongoose.connect(mongoDbConnectionStr, {
+    useUnifiedTopology: true,
     useNewUrlParser: true
 });
 
