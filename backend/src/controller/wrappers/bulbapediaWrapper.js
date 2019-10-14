@@ -51,19 +51,28 @@ class BulbapediaExtractor {
 
     getPokemonBiology(dom) {
         let p_or_div = dom.getElementById("Biology").parentElement.nextElementSibling;
-        if (p_or_div.tagName == "DIV") { // Ignore first image if exists
+        let i = 0;
+        while (p_or_div.tagName == "DIV") {// Ignore first imageS if exists
+            if (i > 10) { // Add limit of while loops
+                return "Empty biology";
+            }
+
             p_or_div = p_or_div.nextElementSibling;
+
+            i++;
         }
 
         return p_or_div.textContent;
     }
 
     isValidPage(text) {
-        return (text.indexOf('There is currently no text in this page') < 0);
+        return (text.indexOf('There is currently no text in this page') < 0 &&
+                text.indexOf('There are two variations of this Pokémon based on ') < 0);
     }
 
     static getPokemonLink(pokemonName) {
         let pokeName = this.sanitizePokemonName(pokemonName);
+        console.log("https://bulbapedia.bulbagarden.net/wiki/" + pokeName + "_(Pok%C3%A9mon)")
         return "https://bulbapedia.bulbagarden.net/wiki/" + pokeName + "_(Pok%C3%A9mon)";
     }
 
