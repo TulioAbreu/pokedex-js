@@ -12,6 +12,12 @@ module.exports = {
         const bulbapediaData = bulbaExtractor.getPokemonJSON()
         const pokedbData = pokedbExtractor.getPokemonJSON()
 
+        if (bulbapediaData == null ||
+            pokedbData == null) 
+        {
+            return null;
+        }
+
         const pokeData = {
             name: bulbapediaData["name"],
             number: bulbapediaData["number"],

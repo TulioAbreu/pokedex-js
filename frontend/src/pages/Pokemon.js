@@ -25,6 +25,11 @@ export default function Pokemon({ history, match }) {
         const pokename = match.params.pokeData
         const response = await api.post(`/poke/${pokename}`)
 
+        if (response.data == null) {
+            setPokeInfo(null);
+            return;
+        }
+
         const typesList = response.data.type
         let pokeTypeStyles = []
         for (let i = 0; i < typesList.length; ++i) {

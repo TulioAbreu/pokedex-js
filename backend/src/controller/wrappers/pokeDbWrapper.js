@@ -33,17 +33,7 @@ class PokeDbExtractor {
         const textContent = tmpDiv.textContent;
 
         if (! this.isValidPage(textContent)) {
-            return {
-                "species": "",
-                "abilities": [],
-                "status_hp": [-1, -1, -1],
-                "status_attack": [-1, -1, -1],
-                "status_defense": [-1, -1, -1],
-                "status_spAttack": [-1, -1, -1],
-                "status_spDefense": [-1, -1, -1],
-                "status_speed": [-1, -1, -1],
-                "status_total": [-1, -1, -1],
-            }
+            return null;
         }
 
         let pokemonStatus = this.getPokemonStatus(dom.window.document)

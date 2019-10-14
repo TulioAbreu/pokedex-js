@@ -143,15 +143,7 @@ class BulbapediaExtractor {
         const textContent = tmpDiv.textContent;
 
         if (!this.isValidPage(textContent)) {
-            return {
-                name: "",
-                number: "",
-                imgURL: "",
-                type: "",
-                height: "",
-                weight: "",
-                biology: ""
-            }
+            return null;
         }
 
         return {
