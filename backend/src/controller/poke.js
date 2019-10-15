@@ -7,9 +7,15 @@ module.exports = {
 
         let pokeData = await getPoke(pokeName)
         if (pokeData == null) {
-            console.log(`Scrapping for pokemon data [POKEMON=${pokeName}]`)
-            pokeData = await scrapePokeData(pokeName)
-            savePoke(pokeData)
+            try {
+                console.log(`Scrapping for pokemon data [POKEMON=${pokeName}]`)
+                pokeData = await scrapePokeData(pokeName)
+                savePoke(pokeData)
+            }
+            catch (e) {
+                console.log(`Failed to scrap pokemon data [POKEMON=${pokeName}]`)
+                pokeData = null;
+            }
         }
         else {
             console.log(`Sent pokemon cached data [POKEMON=${pokeName}]`)
