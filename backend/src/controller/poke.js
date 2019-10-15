@@ -16,8 +16,12 @@ module.exports = {
         const { pokeName } = request.params
 
         let pokeData = await getPoke(pokeName)
-        const isExpired = isPokeDataExpired(pokeData["lastExtractionAt"])
-        
+
+        let isExpired = false
+        if (pokeData != null) {
+            isExpired = isPokeDataExpired(pokeData["lastExtractionAt"])
+        }
+    
         if (pokeData == null || isExpired) {
             try {
                 if (isExpired) {
