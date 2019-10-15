@@ -17,30 +17,30 @@ export default function Pokemon({ history, match }) {
         setReload(true)
     }
     
-    async function loadPokemon() {
-        const pokename = match.params.pokeData
-        const response = await api.post(`/poke/${pokename}`)
-
-        if (response.data == null) {
-            setPokeInfo(null);
-            return;
-        }
-
-        const typesList = response.data.type
-        let pokeTypeStyles = []
-        for (let i = 0; i < typesList.length; ++i) {
-            pokeTypeStyles.push({
-                str: typesList[i],
-                cssClass: "type-icon type-" + typesList[i].toLowerCase()
-            })
-        }
-
-        setTypes(pokeTypeStyles)
-        setPokeInfo(response.data)
-    }
-
     useEffect(() => {
         async function loadPokemonPage() {
+            async function loadPokemon() {
+                const pokename = match.params.pokeData
+                const response = await api.post(`/poke/${pokename}`)
+        
+                if (response.data == null) {
+                    setPokeInfo(null);
+                    return;
+                }
+        
+                const typesList = response.data.type
+                let pokeTypeStyles = []
+                for (let i = 0; i < typesList.length; ++i) {
+                    pokeTypeStyles.push({
+                        str: typesList[i],
+                        cssClass: "type-icon type-" + typesList[i].toLowerCase()
+                    })
+                }
+        
+                setTypes(pokeTypeStyles)
+                setPokeInfo(response.data)
+            }
+
             await loadPokemon().then(_ => {
                 setIsLoading(false)
             })

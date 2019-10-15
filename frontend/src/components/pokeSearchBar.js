@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import './pokeSearchBar.css'
 
 export default function PokeSearchBar(history, onSubmitCallback) {
-    const [pokename, setPokename] = useState('');
+    const [pokename, setPokename] = useState('')
 
     async function handleSubmit(e) {
-        e.preventDefault();
-        history.push(`/poke/${pokename}`);
+        e.preventDefault()
+
+        if (pokename.toLowerCase() == 'nidoran') {
+            history.push('/selectNidoran')
+        }
+        else {
+            history.push(`/poke/${pokename}`);
+        }
 
         if (onSubmitCallback != null) {
             onSubmitCallback();
