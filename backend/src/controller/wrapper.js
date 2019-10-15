@@ -34,7 +34,8 @@ module.exports = {
             status_spAttack: pokedbData["status_spAttack"],
             status_spDefense: pokedbData["status_spDefense"],
             status_speed: pokedbData["status_speed"],
-            status_total: pokedbData["status_total"]
+            status_total: pokedbData["status_total"],
+            lastExtractionAt: new Date().toString()
         }
 
         return pokeData

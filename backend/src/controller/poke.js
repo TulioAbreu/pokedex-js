@@ -3,11 +3,26 @@ const { scrapePokeData } = require('./wrapper')
 
 module.exports = {
     async show(request, response) {
+        function isPokeDataExpired(dateStr) {
+            const extractionDate = new Date(dateStr)
+            const hoursLimit = 24
+            const nowDate = new Date()
+
+            const hoursSinceExtraction = (nowDate - extractionDate) / (1000*60*60)
+
+            return hoursSinceExtraction > hoursLimit            
+        }
+
         const { pokeName } = request.params
 
         let pokeData = await getPoke(pokeName)
-        if (pokeData == null) {
+        const isExpired = isPokeDataExpired(pokeData["lastExtractionAt"])
+        
+        if (pokeData == null || isExpired) {
             try {
+                if (isExpired) {
+                    console.log(`Pokemon data may be deprecated [POKEMON=${pokeName}]`)
+                }
                 console.log(`Scrapping for pokemon data [POKEMON=${pokeName}]`)
                 pokeData = await scrapePokeData(pokeName)
                 savePoke(pokeData)

@@ -40,7 +40,11 @@ const PokeSchema = new Schema({
     status: [{
         type: Schema.Types.Array,
         required: false
-    }]
+    }],
+    lastExtractionAt: {
+        type: Schema.Types.String,
+        required: true
+    }
 });
 
 module.exports = model('Poke', PokeSchema);
