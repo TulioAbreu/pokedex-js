@@ -2,23 +2,19 @@ import React, { useEffect, useState } from 'react';
 import api from '../services/api'
 import './Pokemon.css';
 import './Main.css'
-import FadeIn from "react-fade-in";
-import Lottie from "react-lottie";
+import PokeSearchBar from '../components/pokeSearchBar'
 import ReactLoading from "react-loading";
 import pokeNotFound from '../components/pokeNotFound'
 
 export default function Pokemon({ history, match }) {
     const [reloadPage, setReload] = useState(true);
-    const [pokename, setPokename] = useState('');
     const [types, setTypes] = useState([])
     const [pokeInfo, setPokeInfo ] = useState({});
     const [isLoading, setIsLoading] = useState(true);
 
-    async function handleSubmit(e) {
-        e.preventDefault();
+    function onSearchSubmit() {
         setIsLoading(true)
-        history.push(`/poke/${pokename}`);
-        setReload(true);
+        setReload(true)
     }
     
     async function loadPokemon() {
@@ -43,13 +39,13 @@ export default function Pokemon({ history, match }) {
         setPokeInfo(response.data)
     }
 
-    async function loadPokemonPage() {
-        await loadPokemon().then(_ => {
-            setIsLoading(false)
-        })
-    }
-
     useEffect(() => {
+        async function loadPokemonPage() {
+            await loadPokemon().then(_ => {
+                setIsLoading(false)
+            })
+        }
+
         if (! reloadPage) return
         loadPokemonPage();
         setReload(false);
@@ -57,23 +53,8 @@ export default function Pokemon({ history, match }) {
 
     return (
         <div className="App">
-            <h1 className="AppTitle">PokedexJS</h1>
-            <form onSubmit={handleSubmit}>
-                <input 
-                    className="PokeInput"
-                    value={pokename}
-                    onChange={e => setPokename(e.target.value)}
-                    placeholder="Pokemon name"
-                    required
-                >
-                </input>
-                <button 
-                    type="submit"
-                    className="PokeButton"
-                >
-                    Search
-                </button>
-            </form>
+            <h1 className="AppTitle">Pokédex JS</h1>
+            { PokeSearchBar(history, onSearchSubmit) }
 
             <div className={isLoading? "loading":"notLoading"}></div>
 
@@ -89,18 +70,30 @@ export default function Pokemon({ history, match }) {
                         </div>
                         :
                         <div>
-                            <p className="pokeName">{pokeInfo.number} - {pokeInfo.name}</p>
-                            <img className="pokeImage" 
-                                src={pokeInfo.imgURL} 
-                                alt={pokeInfo.name} width="300"></img>
-                            {types.map(type => (
-                                <div className={ type.cssClass }>
-                                    { type.str }
-                                </div>
-                            ))}
-                            <p>Height: {pokeInfo.height}</p>
-                            <p>Weight: {pokeInfo.weight}</p>
-                            <p className="pokeBiology">Biology: {pokeInfo.biology}</p>
+                            <p className="pokeName">
+                                { pokeInfo.number } - { pokeInfo.name }
+                            </p>
+                            <img 
+                                className="pokeImage" 
+                                src={ pokeInfo.imgURL } 
+                                alt={ pokeInfo.name } width="300"
+                                />
+                            {
+                                types.map(type => (
+                                    <div className={ type.cssClass }>
+                                        { type.str }
+                                    </div>
+                                ))
+                            }
+                            <p>
+                                Height: { pokeInfo.height }
+                            </p>
+                            <p>
+                                Weight: {pokeInfo.weight}
+                            </p>
+                            <p className="pokeBiology">
+                                Biology: { pokeInfo.biology }
+                            </p>
                         </div>
                     }
                 </div>
