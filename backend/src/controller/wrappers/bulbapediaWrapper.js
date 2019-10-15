@@ -71,7 +71,30 @@ class BulbapediaExtractor {
     }
 
     static getPokemonLink(pokemonName) {
-        let pokeName = this.sanitizePokemonName(pokemonName);
+        let pokeName
+        switch (pokemonName.toLowerCase()) {
+            case 'nidoran-f': {
+                pokeName = 'Nidoran%E2%99%80'
+            } break
+            case 'nidoran-m': {
+                pokeName = 'Nidoran%E2%99%82'
+            } break
+            case 'jangmo-o': {
+                pokeName = 'Jangmo-o'
+            } break
+            case 'flabébé': {
+                pokeName = 'Flab%C3%A9b%C3%A9'
+            } break
+            case 'hakamo-o': {
+                pokeName = 'Hakamo-o'
+            } break
+            case 'kommo-o': {
+                pokeName = 'Kommo-o'
+            } break
+            default: {
+                pokeName = this.sanitizePokemonName(pokemonName);
+            } break
+        }
         return "https://bulbapedia.bulbagarden.net/wiki/" + pokeName + "_(Pok%C3%A9mon)";
     }
 

@@ -6,7 +6,17 @@ function fixPokeName(rawPokeName) {
 }
 
 async function getPoke(pokeName) {
-    let sanitizedPokeName = fixPokeName(pokeName)
+    let sanitizedPokeName
+
+    switch (pokeName) {
+        case 'nidoran-f':
+        case 'nidoran-m': {
+            // Nothing to do
+        } break
+        default: {
+            sanitizedPokeName = fixPokeName(pokeName)
+        } break
+    }
 
     const pokeData = await Poke.findOne({
         "name": sanitizedPokeName
