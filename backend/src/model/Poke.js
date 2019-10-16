@@ -37,14 +37,40 @@ const PokeSchema = new Schema({
         type: Schema.Types.String,
         required: false
     }],
-    status: [{
-        type: Schema.Types.Array,
-        required: false
-    }],
     lastExtractionAt: {
         type: Schema.Types.String,
         required: true
-    }
+    },
+    status_hp: [{
+        type: Schema.Types.String,
+        required: true
+    }],
+    status_attack: [{
+        type: Schema.Types.String,
+        required: true
+    }],
+    status_defense: [{
+        type: Schema.Types.String,
+        required: true
+    }],
+    status_spAttack: [{
+        type: Schema.Types.String,
+        required: true
+    }],
+    status_spDefense: [{
+        type: Schema.Types.String,
+        required: true
+    }],
+    status_speed: [{
+        type: Schema.Types.String,
+        required: true
+    }],
+    status_total: [{
+        type: Schema.Types.String,
+        required: true
+    }]
 });
+
+PokeSchema.remove({})
 
 module.exports = model('Poke', PokeSchema);
