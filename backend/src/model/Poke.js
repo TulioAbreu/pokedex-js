@@ -71,6 +71,4 @@ const PokeSchema = new Schema({
     }]
 });
 
-PokeSchema.remove({})
-
 module.exports = model('Poke', PokeSchema);
