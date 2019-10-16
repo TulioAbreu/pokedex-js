@@ -91,9 +91,79 @@ export default function Pokemon({ history, match }) {
                             <p>
                                 Weight: {pokeInfo.weight}
                             </p>
-                            <p className="pokeBiology">
-                                Biology: { pokeInfo.biology }
+
+                            <hr class="element-divider"/>
+
+                            <p className="info-title">
+                                Biology: 
                             </p>
+                            <p className="pokeBiology">
+                                { pokeInfo.biology }
+                            </p>
+
+                            <hr class="element-divider"/>
+                            
+                            <p className="info-title"> 
+                                Abilities
+                            </p>
+                            {
+                                pokeInfo.abilities.map(ability => (
+                                    <p>
+                                        { ability }
+                                    </p>
+                                ))
+                            }
+
+                            <hr className="element-divider"/>
+                            
+                            <p className="info-title">
+                                Status
+                            </p>
+
+                            <table className="status-table">
+                                <tr>
+                                    <th className="status-table-top-header"></th>
+                                    <th className="status-table-top-header">Base</th>
+                                    <th className="status-table-top-header">Min</th>
+                                    <th className="status-table-top-header">Max</th>
+                                </tr>
+                                <tr>
+                                    <td className="status-table-left-header">HP</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_hp[0] }</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_hp[1] }</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_hp[2] }</td>
+                                </tr>
+                                <tr>
+                                    <td className="status-table-left-header">Attack</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_attack[0] }</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_attack[1] }</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_attack[2] }</td>
+                                </tr>
+                                <tr>
+                                    <td className="status-table-left-header">Defense</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_defense[0] }</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_defense[1] }</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_defense[2] }</td>
+                                </tr>
+                                <tr>
+                                    <td className="status-table-left-header">Sp. Attack</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_spAttack[0] }</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_spAttack[1] }</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_spAttack[2] }</td>
+                                </tr>
+                                <tr>
+                                    <td className="status-table-left-header">Sp. Defense</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_spDefense[0] }</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_spDefense[1] }</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_spDefense[2] }</td>
+                                </tr>
+                                <tr>
+                                    <td className="status-table-left-header">Speed</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_speed[0] }</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_speed[1] }</td>
+                                    <td className="status-table-cell">{ pokeInfo.status_speed[2] }</td>
+                                </tr>
+                            </table>
                         </div>
                     }
                 </div>
