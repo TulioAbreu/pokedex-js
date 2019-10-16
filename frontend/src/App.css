@@ -2,14 +2,3 @@
   text-align: center;
 }
 
-@font-face {
-  font-family: 'PocketMonk';
-  font-style: normal;
-  src: url('./fonts/pocket_monk.otf');
-}
-
-.AppTitle {
-  color: whitesmoke;
-  font-family: 'PocketMonk';  
-  font-size: 4em;
-}

@@ -4,6 +4,7 @@ import PokeSearchBar from '../components/pokeSearchBar'
 import './Main.css'
 import './Pokemon.css'
 import './NidoranSelect.css'
+import PageTitle from '../components/pageTitle'
 
 export default function NidoranPage({ history }) {
     let nidoranMaleImgLink = 'https://cdn.bulbagarden.net/upload/thumb/4/4a/032Nidoran.png/250px-032Nidoran.png'
@@ -11,14 +12,14 @@ export default function NidoranPage({ history }) {
 
     return (
         <div className="App">
-            <h1 className="AppTitle">PokedexJS</h1>
+            { PageTitle() }
             { PokeSearchBar() }
             <div className="pokeTable">
                 <p>
-                    Nidoran is a name used for two different Pokémon because of it's gender special case.
+                    Nidoran is a species of Pokémon and there are two variations based on its gender.
                 </p>
                 <p>
-                    Select the Pokémon you want to check.
+                    Select the Nidoran you want to check
                 </p>
                 <table className='nidoran-table'>
                     <tr>

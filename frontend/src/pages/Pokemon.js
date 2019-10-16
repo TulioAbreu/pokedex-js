@@ -5,6 +5,7 @@ import './Main.css'
 import PokeSearchBar from '../components/pokeSearchBar'
 import ReactLoading from "react-loading";
 import pokeNotFound from '../components/pokeNotFound'
+import PageTitle from '../components/pageTitle';
 
 export default function Pokemon({ history, match }) {
     const [reloadPage, setReload] = useState(true);
@@ -53,7 +54,7 @@ export default function Pokemon({ history, match }) {
 
     return (
         <div className="App">
-            <h1 className="AppTitle">Pokédex JS</h1>
+            { PageTitle() }
             { PokeSearchBar(history, onSearchSubmit) }
 
             <div className={isLoading? "loading":"notLoading"}></div>
