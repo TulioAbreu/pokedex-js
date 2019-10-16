@@ -13,7 +13,7 @@ export default function NidoranPage({ history }) {
     return (
         <div className="App">
             { PageTitle() }
-            { PokeSearchBar() }
+            { PokeSearchBar(history) }
             <div className="pokeTable">
                 <p>
                     Nidoran is a species of Pokémon and there are two variations based on its gender.
