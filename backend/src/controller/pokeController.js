@@ -26,7 +26,12 @@ async function getPoke(pokeName) {
 }
 
 async function savePoke(pokeData) {
-    await Poke.create(pokeData)
+    if (pokeData['_id'] != null) {
+        await Poke.updateOne({"_id": pokeData['_id']}, pokeData)
+    }
+    else {
+        await Poke.create(pokeData)
+    }
 }    
 
 module.exports = {

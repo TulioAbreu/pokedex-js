@@ -10,7 +10,7 @@ module.exports = {
 
             const hoursSinceExtraction = (nowDate - extractionDate) / (1000*60*60)
 
-            return hoursSinceExtraction > hoursLimit            
+            return hoursSinceExtraction > hoursLimit
         }
 
         const { pokeName } = request.params
@@ -18,8 +18,10 @@ module.exports = {
         let pokeData = await getPoke(pokeName)
 
         let isExpired = false
+        let oldDataId
         if (pokeData != null) {
             isExpired = isPokeDataExpired(pokeData["lastExtractionAt"])
+            oldDataId = pokeData['_id']
         }
     
         if (pokeData == null || isExpired) {
@@ -29,6 +31,7 @@ module.exports = {
                 }
                 console.log(`Scrapping for pokemon data [POKEMON=${pokeName}]`)
                 pokeData = await scrapePokeData(pokeName)
+                pokeData['_id'] = oldDataId
                 savePoke(pokeData)
             }
             catch (e) {
