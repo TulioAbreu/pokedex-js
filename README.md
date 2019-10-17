@@ -9,3 +9,4 @@ This is a project made for "Web Data Management" course on my university, where 
 
 - [PokémonDB](https://pokemondb.net)
 
+# I DON'T recommend you to use this application. Besides Web Scraping being useful, content creators dont want you to scrape their content!
