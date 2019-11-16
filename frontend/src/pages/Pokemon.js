@@ -93,6 +93,20 @@ export default function Pokemon({ history, match }) {
                                 Weight: {pokeInfo.weight}
                             </p>
 
+                            {pokeInfo.alolanFormURL != ""?
+                                <div>
+                                    <img
+                                        src={ "http://" + pokeInfo.alolanFormURL }
+                                        alt="Alolan Form"
+                                        width="200"/>
+                                    <p>
+                                        { pokeInfo.name }'s Alolan Form
+                                    </p>
+                                </div>
+                                :
+                                <div></div>
+                            }
+
                             <hr class="element-divider"/>
 
                             <p className="info-title">
