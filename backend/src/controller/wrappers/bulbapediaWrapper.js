@@ -66,16 +66,19 @@ class BulbapediaExtractor {
 
     getPokemonType(text) {
         const types = text.match(/title=\".*\s\(type\)\"/g);
-        let possiblyRealTypes = [
-            types[0],
-            types[1]
-        ];
-        let typesStr = possiblyRealTypes.map(value => {
-            return value.substring(7, value.indexOf(' '));
-        }).filter(value => {
-            return value != "Unknown"
-        });
-        return typesStr;
+        if (types.length >= 2) {
+            let possiblyRealTypes = [
+                types[0],
+                types[1]
+            ];
+            let typesStr = possiblyRealTypes.map(value => {
+                return value.substring(7, value.indexOf(' '));
+            }).filter(value => {
+                return value != "Unknown"
+            });
+            return typesStr;
+        }
+        return ["Unknown"]
     }
 
     getPokemonBiology(dom) {
