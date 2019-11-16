@@ -81,6 +81,22 @@ class BulbapediaExtractor {
         return ["Unknown"]
     }
 
+    getAlolanFormLink(text) {
+        let alolanFormLink = text.match(/cdn\.bulbagarden\.net(.)*\-Alola\.png" width="110"/g);
+        if (alolanFormLink) {
+            if (alolanFormLink.length >= 1) {
+                alolanFormLink = alolanFormLink[0].split('" width="110"')[0]
+                alolanFormLink = alolanFormLink.replace("/thumb", "")
+                alolanFormLink = alolanFormLink.split(".png/")[0]
+                alolanFormLink += ".png"
+                return alolanFormLink
+            }
+        }
+        else {
+            return ''
+        }
+    }
+
     getPokemonBiology(dom) {
         let p_or_div = dom.getElementById("Biology").parentElement.nextElementSibling;
         let i = 0;
@@ -217,6 +233,7 @@ class BulbapediaExtractor {
 
         return {
             name: this.getPokemonName(textContent),
+            alolanFormURL: this.getAlolanFormLink(this.htmlCode),
             number: this.getPokemonNumber(textContent),
             imgURL: this.getPokemonImage(this.htmlCode),
             type: this.getPokemonType(this.htmlCode),

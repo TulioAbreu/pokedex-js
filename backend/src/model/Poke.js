@@ -13,6 +13,10 @@ const PokeSchema = new Schema({
         type: Schema.Types.String,
         required: true
     },
+    alolanFormURL: {
+        type: Schema.Types.String,
+        required: false
+    },
     type: [{
         type: Schema.Types.String,
         required: true
