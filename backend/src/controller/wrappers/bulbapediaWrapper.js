@@ -10,25 +10,54 @@ class BulbapediaExtractor {
     }
 
     getPokemonNumber(text) {
-        return text.match(/#[0-9]*/g)[2];
+        let pokemonNumber = text.match(/#[0-9]*/g)
+        if (pokemonNumber.length >= 2) {
+            return pokemonNumber[2]
+        }
+        else {
+            return '#???';
+        }
     }
 
     getPokemonHeight(text) {
-        return text.match(/[0-9]+\.[0-9]+\sm/g)[0];
+        let height = text.match(/[0-9]+\.[0-9]+\sm/g)
+        if (height.length >= 1) {
+            return height[0];
+        }
+        else {
+            return '?.?? m'
+        }
     }
 
     getPokemonWeight(text) {
-        return text.match(/[0-9]+\.[0-9]+\skg/g)[0];
+        let weight = text.match(/[0-9]+\.[0-9]+\skg/g)
+        if (weight.length >= 1) {
+            return weight[0]
+        }
+        else {
+            return '?.?? kg'
+        }
     }
 
     getPokemonImage(text) {
         let pokeImage = text.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/);
         if (!pokeImage) {
             pokeImage = text.match(/\/\/cdn\.bulbagarden\.net\/upload\/thumb.*500px.*(?:jpg|gif|png)/);
-            let splitTest = pokeImage[0].split(' ').slice(-1)[0];
-            return splitTest;
+            if (pokeImage) {
+                if (pokeImage.length >= 1) {
+                    console.log("Hello,world1")
+                    let splitTest = pokeImage[0].split(' ').slice(-1)[0];
+                    return splitTest;
+                }
+            }
         }
-        return pokeImage[0];
+
+        if (pokeImage) {
+            return pokeImage[0]
+        }
+        else {
+            return 'https://www.publicdomainpictures.net/pictures/40000/nahled/question-mark.jpg'
+        }
     }
 
     getPokemonName(text) {
@@ -62,7 +91,13 @@ class BulbapediaExtractor {
             i++;
         }
 
-        return p_or_div.textContent;
+        if (p_or_div.textContent.length < 50) {
+            return "There is no biography for this pokemon yet."
+        }
+        else {
+            return p_or_div.textContent;
+        }
+
     }
 
     isValidPage(text) {
