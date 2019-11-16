@@ -107,6 +107,21 @@ export default function Pokemon({ history, match }) {
                                 <div></div>
                             }
 
+                            {pokeInfo.galarFormURL != ""?
+                                <div>
+                                    <img
+                                        src={ "http://" + pokeInfo.galarFormURL }
+                                        alt="Galarian Form"
+                                        width="200"/>
+                                    <p>
+                                        { pokeInfo.name }'s Galarian Form
+                                    </p>
+                                </div>
+                                :
+                                <div></div>
+                            }
+
+
                             <hr class="element-divider"/>
 
                             <p className="info-title">

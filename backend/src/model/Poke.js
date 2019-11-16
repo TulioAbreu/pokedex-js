@@ -17,6 +17,10 @@ const PokeSchema = new Schema({
         type: Schema.Types.String,
         required: false
     },
+    galarFormURL: {
+        type: Schema.Types.String,
+        required: false
+    },
     type: [{
         type: Schema.Types.String,
         required: true

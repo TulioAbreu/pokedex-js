@@ -23,6 +23,7 @@ module.exports = {
             number: bulbapediaData["number"],
             imgURL: bulbapediaData["imgURL"],
             alolanFormURL: bulbapediaData["alolanFormURL"],
+            galarFormURL: bulbapediaData["galarFormURL"],
             type: bulbapediaData["type"],
             height: bulbapediaData["height"],
             weight: bulbapediaData["weight"],
