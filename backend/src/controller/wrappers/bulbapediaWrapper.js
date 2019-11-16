@@ -243,6 +243,8 @@ class BulbapediaExtractor {
         let tmpDiv = dom.window.document.createElement('div');
         tmpDiv.innerHTML = this.htmlCode;
         const textContent = tmpDiv.textContent;
+        
+        this.htmlCode = tmpDiv.innerHTML;
 
         if (!this.isValidPage(textContent)) {
             return null;
