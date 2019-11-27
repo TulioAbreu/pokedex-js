@@ -45,7 +45,6 @@ class BulbapediaExtractor {
             pokeImage = text.match(/\/\/cdn\.bulbagarden\.net\/upload\/thumb.*500px.*(?:jpg|gif|png)/);
             if (pokeImage) {
                 if (pokeImage.length >= 1) {
-                    console.log("Hello,world1")
                     let splitTest = pokeImage[0].split(' ').slice(-1)[0];
                     return splitTest;
                 }
