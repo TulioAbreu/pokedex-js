@@ -125,7 +125,7 @@ export default function Pokemon({ history, match }) {
                             <hr class="element-divider"/>
 
                             <p className="info-title">
-                                Biology: 
+                                Biology
                             </p>
                             <p className="pokeBiology">
                                 { pokeInfo.biology }
