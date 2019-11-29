@@ -20,18 +20,9 @@ export default function PokeSearchBar(history, onSubmitCallback) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input 
-                className="PokeInput"
-                value={pokename}
-                onChange={e => setPokename(e.target.value)}
-                placeholder="Pokemon name">
-            </input>
-            <button 
-                type="submit"
-                className="PokeButton">
-                Search
-            </button>
+        <form class="form-inline" onSubmit={handleSubmit}>
+            <input class="form-control mr-sm-2" type="search" value={pokename} onChange={e => setPokename(e.target.value)} placeholder="Pesquisar" aria-label="Pesquisar"/>
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
         </form>
     )
 }

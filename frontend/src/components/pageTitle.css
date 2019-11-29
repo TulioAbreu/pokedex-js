@@ -5,7 +5,9 @@
 }
 
 .AppTitle {
-    color: whitesmoke;
     font-family: 'PocketMonk';
-    font-size: 4em;
+}
+
+.navbar-brand{
+    font-size: 4em !important;
 }

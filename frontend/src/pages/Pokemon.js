@@ -53,151 +53,159 @@ export default function Pokemon({ history, match }) {
     });
 
     return (
-        <div className="App">
-            { PageTitle() }
-            { PokeSearchBar(history, onSearchSubmit) }
+        <div>
+            { PageTitle(history, onSearchSubmit) }
+            <div className={isLoading? "loading":"notLoading"}/>
+            <div class="container-fluid">
+                {isLoading? 
+                    <div className="loadingBars">
+                        <ReactLoading type={"bars"} color={"white"} />
+                    </div>
+                    :
+                    <div class="col-xs-1 text-center">
+                        {pokeInfo == null?
+                            <div>
+                                { pokeNotFound() }
+                            </div>
+                            :
+                            <div class="pt-5">
+                                <p class="display-4 pb-3">
+                                    { pokeInfo.number } - { pokeInfo.name }
+                                </p>
+                                <img 
+                                    className="pokeImage" 
+                                    src={ pokeInfo.imgURL } 
+                                    alt={ pokeInfo.name } width="30%"
+                                    />
+                                <div class="pb-3">
+                                    {
+                                        types.map(type => (
+                                            <div className={ type.cssClass }>
+                                                { type.str }
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                                <p>
+                                    Height: { pokeInfo.height }
+                                </p>
+                                <p>
+                                    Weight: {pokeInfo.weight}
+                                </p>
 
-            <div className={isLoading? "loading":"notLoading"}></div>
-
-            {isLoading? 
-                <div className="loadingBars">
-                    <ReactLoading type={"bars"} color={"white"} />
-                </div>
-                :
-                <div className="pokeTable">
-                    {pokeInfo == null?
-                        <div>
-                            { pokeNotFound() }
-                        </div>
-                        :
-                        <div>
-                            <p className="pokeName">
-                                { pokeInfo.number } - { pokeInfo.name }
-                            </p>
-                            <img 
-                                className="pokeImage" 
-                                src={ pokeInfo.imgURL } 
-                                alt={ pokeInfo.name } width="300"
-                                />
-                            {
-                                types.map(type => (
-                                    <div className={ type.cssClass }>
-                                        { type.str }
+                                {pokeInfo.alolanFormURL != ""?
+                                    <div>
+                                        <img
+                                            src={ "http://" + pokeInfo.alolanFormURL }
+                                            alt="Alolan Form"
+                                            width="200"/>
+                                        <p>
+                                            { pokeInfo.name }'s Alolan Form
+                                        </p>
                                     </div>
-                                ))
-                            }
-                            <p>
-                                Height: { pokeInfo.height }
-                            </p>
-                            <p>
-                                Weight: {pokeInfo.weight}
-                            </p>
+                                    :
+                                    <div></div>
+                                }
 
-                            {pokeInfo.alolanFormURL != ""?
-                                <div>
-                                    <img
-                                        src={ "http://" + pokeInfo.alolanFormURL }
-                                        alt="Alolan Form"
-                                        width="200"/>
-                                    <p>
-                                        { pokeInfo.name }'s Alolan Form
-                                    </p>
+                                {pokeInfo.galarFormURL != ""?
+                                    <div>
+                                        <img
+                                            src={ "http://" + pokeInfo.galarFormURL }
+                                            alt="Galarian Form"
+                                            width="200"/>
+                                        <p>
+                                            { pokeInfo.name }'s Galarian Form
+                                        </p>
+                                    </div>
+                                    :
+                                    <div></div>
+                                }
+
+
+                                <hr class="element-divider"/>
+
+                                <p class="display-4">
+                                    Biology
+                                </p>
+                                <p className="pokeBiology">
+                                    { pokeInfo.biology }
+                                </p>
+
+                                <hr class="element-divider"/>
+                                
+                                <p class="display-4"> 
+                                    Abilities
+                                </p>
+                                {
+                                    pokeInfo.abilities.map(ability => (
+                                        <p>
+                                            { ability }
+                                        </p>
+                                    ))
+                                }
+
+                                <hr className="element-divider"/>
+                                
+                                <p class="display-4">
+                                    Status
+                                </p>
+
+                                <div class="container pl-5 pr-5 mb-5">
+                                    <table class="table table-hover table-striped">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col">Base</th>
+                                                <th scope="col">Min</th>
+                                                <th scope="col">Max</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">HP</th>
+                                                <td>{ pokeInfo.status_hp[0] }</td>
+                                                <td>{ pokeInfo.status_hp[1] }</td>
+                                                <td>{ pokeInfo.status_hp[2] }</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Attack</th>
+                                                <td>{ pokeInfo.status_attack[0] }</td>
+                                                <td>{ pokeInfo.status_attack[1] }</td>
+                                                <td>{ pokeInfo.status_attack[2] }</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Defense</th>
+                                                <td>{ pokeInfo.status_defense[0] }</td>
+                                                <td>{ pokeInfo.status_defense[1] }</td>
+                                                <td>{ pokeInfo.status_defense[2] }</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Sp. Attack</th>
+                                                <td>{ pokeInfo.status_spAttack[0] }</td>
+                                                <td>{ pokeInfo.status_spAttack[1] }</td>
+                                                <td>{ pokeInfo.status_spAttack[2] }</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Sp. Defense</th>
+                                                <td>{ pokeInfo.status_spDefense[0] }</td>
+                                                <td>{ pokeInfo.status_spDefense[1] }</td>
+                                                <td>{ pokeInfo.status_spDefense[2] }</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Speed</th>
+                                                <td>{ pokeInfo.status_speed[0] }</td>
+                                                <td>{ pokeInfo.status_speed[1] }</td>
+                                                <td>{ pokeInfo.status_speed[2] }</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                :
-                                <div></div>
-                            }
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
 
-                            {pokeInfo.galarFormURL != ""?
-                                <div>
-                                    <img
-                                        src={ "http://" + pokeInfo.galarFormURL }
-                                        alt="Galarian Form"
-                                        width="200"/>
-                                    <p>
-                                        { pokeInfo.name }'s Galarian Form
-                                    </p>
-                                </div>
-                                :
-                                <div></div>
-                            }
-
-
-                            <hr class="element-divider"/>
-
-                            <p className="info-title">
-                                Biology
-                            </p>
-                            <p className="pokeBiology">
-                                { pokeInfo.biology }
-                            </p>
-
-                            <hr class="element-divider"/>
-                            
-                            <p className="info-title"> 
-                                Abilities
-                            </p>
-                            {
-                                pokeInfo.abilities.map(ability => (
-                                    <p>
-                                        { ability }
-                                    </p>
-                                ))
-                            }
-
-                            <hr className="element-divider"/>
-                            
-                            <p className="info-title">
-                                Status
-                            </p>
-
-                            <table className="status-table">
-                                <tr>
-                                    <th className="status-table-top-header"></th>
-                                    <th className="status-table-top-header">Base</th>
-                                    <th className="status-table-top-header">Min</th>
-                                    <th className="status-table-top-header">Max</th>
-                                </tr>
-                                <tr>
-                                    <td className="status-table-left-header">HP</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_hp[0] }</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_hp[1] }</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_hp[2] }</td>
-                                </tr>
-                                <tr>
-                                    <td className="status-table-left-header">Attack</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_attack[0] }</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_attack[1] }</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_attack[2] }</td>
-                                </tr>
-                                <tr>
-                                    <td className="status-table-left-header">Defense</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_defense[0] }</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_defense[1] }</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_defense[2] }</td>
-                                </tr>
-                                <tr>
-                                    <td className="status-table-left-header">Sp. Attack</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_spAttack[0] }</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_spAttack[1] }</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_spAttack[2] }</td>
-                                </tr>
-                                <tr>
-                                    <td className="status-table-left-header">Sp. Defense</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_spDefense[0] }</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_spDefense[1] }</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_spDefense[2] }</td>
-                                </tr>
-                                <tr>
-                                    <td className="status-table-left-header">Speed</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_speed[0] }</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_speed[1] }</td>
-                                    <td className="status-table-cell">{ pokeInfo.status_speed[2] }</td>
-                                </tr>
-                            </table>
-                        </div>
-                    }
-                </div>
-            }
         </div>
     )
 }
